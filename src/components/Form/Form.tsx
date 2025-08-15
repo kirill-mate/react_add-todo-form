@@ -1,13 +1,14 @@
 import { useState } from 'react';
 
 import './Form.scss';
-import usersFromServer from '../../api/users';
 import { Todo } from '../../types/Todo';
 import { getUserById } from '../../services/getUserById';
+import { User } from '../../types/User';
 
 type Props = {
   addTodo: (todo: Todo) => void;
   todos: Todo[];
+  users: User[];
 };
 
 function getTheLargestId(todos: Todo[]) {
@@ -18,9 +19,9 @@ function getTheLargestId(todos: Todo[]) {
   return Math.max(...todos.map(todo => todo.id)) + 1;
 }
 
-export const Form: React.FC<Props> = ({ addTodo, todos }) => {
+export const Form: React.FC<Props> = ({ addTodo, todos, users }) => {
   const [title, setTitle] = useState('');
-  const [secectedUser, setSecectedUser] = useState('0');
+  const [selectedUser, setSecectedUser] = useState('0');
   const [titleError, setTitleError] = useState(false);
   const [selectedUserError, setSelectedUserError] = useState(false);
 
@@ -35,15 +36,15 @@ export const Form: React.FC<Props> = ({ addTodo, todos }) => {
       setTitleError(true);
     }
 
-    if (secectedUser === '0') {
+    if (selectedUser === '0') {
       setSelectedUserError(true);
     }
 
-    if (!cleanedTitle || secectedUser === '0') {
+    if (!cleanedTitle || selectedUser === '0') {
       return;
     }
 
-    const user = getUserById(+secectedUser);
+    const user = getUserById(+selectedUser);
 
     if (!user) {
       return;
@@ -62,6 +63,7 @@ export const Form: React.FC<Props> = ({ addTodo, todos }) => {
       title: cleanedTitle,
       completed,
       userId,
+      user,
     });
 
     setTitle('');
@@ -102,14 +104,14 @@ export const Form: React.FC<Props> = ({ addTodo, todos }) => {
 
         <select
           id="users"
-          value={secectedUser}
+          value={selectedUser}
           data-cy="userSelect"
           onChange={changeSelectedUser}
         >
           <option value="0" disabled>
             Choose a user
           </option>
-          {usersFromServer.map(user => (
+          {users.map(user => (
             <option key={user.id} value={user.id}>
               {user.name}
             </option>

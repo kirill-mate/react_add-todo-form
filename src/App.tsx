@@ -4,6 +4,7 @@ import './App.scss';
 import { TodoList } from './components/TodoList';
 import { Todo } from './types/Todo';
 import todosFromServer from './api/todos';
+import usersFromServer from './api/users';
 import { Form } from './components/Form';
 import { getUserById } from './services/getUserById';
 
@@ -25,7 +26,7 @@ export const App = () => {
     <div className="App">
       <h1>Add todo form</h1>
 
-      <Form addTodo={handleAdd} todos={todosReady} />
+      <Form addTodo={handleAdd} todos={todosReady} users={usersFromServer} />
 
       <TodoList todos={todosReady} />
     </div>
