@@ -27,7 +27,7 @@ form {
 
     .error {
       color: #e63946;
-      font-size: 0.875rem;
+      font-size: 0.88rem;
       white-space: nowrap;
       width: 200px; // фиксированная ширина, чтобы форма не прыгала
     }
@@ -44,13 +44,13 @@ form {
     cursor: pointer;
     transition: background 0.2s;
 
-    &:hover:not(:disabled) {
-      background: #2759a6;
-    }
-
     &:disabled {
       opacity: 0.6;
       cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      background: #2759a6;
     }
   }
 }
